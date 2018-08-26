@@ -12,6 +12,7 @@
         <module>loadsimulator</module>
         <module>btracesamples</module>
         <module>annotations</module>
+        <module>spring-boot-demo</module>
     </modules>
 
     <build>

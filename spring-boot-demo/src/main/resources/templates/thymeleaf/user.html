@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <!--<script th:src="@{/static/js/test.js}"></script>-->
+</head>
+<body>
+<div>
+    用户名：<input th:id="${user.name}" th:name="${user.name}" th:value="${user.name}" >
+    <br>
+    用户年龄: <input th:value="${user.age}">
+    <br>
+    生日：<input th:value="${user.birthday}">
+    <br>
+    <!--用户生日-->
+    生日：<input th:value="${#dates.format(user.birthday, 'yyyy-MM-dd')}">
+
+</div>
+<br>
+<div th:object="${user}">
+    用户名：<input th:id="*{name}" th:name="*{name}" th:value="*{name}" >
+    <br>
+    用户年龄: <input th:value="*{age}">
+    <br>
+    生日：<input th:value="*{birthday}">
+    <br>
+    <!--用户生日-->
+    生日：<input th:value="*{#dates.format(birthday, 'yyyy-MM-dd')}">
+
+</div>
+
+
+text: <br>
+th:text: <span th:text="${user.description}"></span>
+<br>
+th:utext: <span th:utext="${user.description}"></span>
+
+<br>
+<!--超链接-->
+URL: <br/>
+<a href="" th:href="@{https://jianyuan.me}">建元的博客</a>
+
+
+<br>
+<form th:action="@{/tmf/postform}" th:object="${user}" th:metohd="post">
+    <input type="text" th:field="*{name}"/>
+    <input type="text" th:field="*{age}"/>
+    <input type="submit" />
+</form>
+
+
+<br> Compare
+
+<div th:if="${user.age} == 18">18岁的天空</div>
+<div th:if="${user.age} gt 18">大于18岁，老了</div>
+<div th:if="${user.age} lt 18">ge小于18岁，年轻人</div>
+<div th:if="${user.age} ge 18">大于等于18，不小了</div>
+<div th:if="${user.age} le 18">小于等于18，不大啊</div>
+
+<br><br>
+Select <br>
+
+<select>
+    <option>选择框</option>
+    <option th:selected="${user.name eq 'lee'}">Lee</option>
+    <option th:selected="${user.name eq 'imooc'}">imooc</option>
+    <option th:selected="${user.name eq 'zhang'}">zhang</option>
+</select>
+
+<br><br>
+For each: <br>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Desc</th>
+        <th>BirthDay</th>
+    </tr>
+    <tr th:each="person:${userList}">
+        <td th:text = "${person.name}"></td>
+        <td th:text = "${person.age}"></td>
+        <td th:text = "${person.age gt 18} ? 你老了 : 还年轻"></td>
+        <td th:text = "${#dates.format(person.birthday, 'yy-MM-dd')}"></td>
+    </tr>
+</table>
+
+<br><br>
+Switch <br>
+<div th:switch="${user.name}">
+    <p th:case="'lee'">lee</p>
+    <p th:case="#{roles.manager}">普通管理员</p>
+    <p th:case="#{roles.superadmin}">超级管理员</p>
+    <p th:case="*">其他用户</p>
+</div>
+</body>
+</html>

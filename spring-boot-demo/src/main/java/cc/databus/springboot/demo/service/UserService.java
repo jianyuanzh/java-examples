@@ -10,6 +10,6 @@ public interface UserService {
     void deleteUser(String userId);
     List<SysUser> queryUserList(SysUser sysUser);
     List<SysUser> queryUserListPaged(SysUser user, Integer page, Integer pageSize);
-    SysUser queryUserByIdCustom(String userId);
+    List<SysUser> queryUserByIdCustom(String userId);
     void saveUserTransactional(SysUser user);
 }

@@ -1,9 +1,9 @@
 package cc.databus.springboot.demo.service.impl;
 
 import cc.databus.springboot.demo.mapper.SysUserMapper;
+import cc.databus.springboot.demo.mapper.SysUserMapperCustom;
 import cc.databus.springboot.demo.pojo.SysUser;
 import cc.databus.springboot.demo.service.UserService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private SysUserMapper userMapper;
+
+    @Autowired
+    private SysUserMapperCustom userMapperCustom;
 
     @Override
     public void saveUser(SysUser sysUser) {
@@ -51,8 +54,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SysUser queryUserByIdCustom(String userId) {
-        return userMapper.selectByPrimaryKey(userId);
+    public List<SysUser> queryUserByIdCustom(String userId) {
+        return userMapperCustom.queryUserSimplyInfoById(userId);
     }
 
     @Override

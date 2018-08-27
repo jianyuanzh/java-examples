@@ -5,7 +5,9 @@ import cc.databus.springboot.demo.pojo.SysUser;
 import cc.databus.springboot.demo.pojo.User;
 import cc.databus.springboot.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -46,7 +48,7 @@ public class UserController {
     }
 
     @RequestMapping("/query")
-    public JsonResponse query(Integer page, Integer pageSize) {
+    public JsonResponse query(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
         if (page == null) {
             page = 1;
         }
@@ -58,5 +60,10 @@ public class UserController {
         SysUser user = new SysUser();
         user.setNickname("lee");
         return new JsonResponse(200, "OK", userService.queryUserListPaged(user, page, pageSize));
+    }
+
+    @RequestMapping("/customquery/{id}")
+    public JsonResponse customQuery(@PathVariable String id) {
+        return new JsonResponse(200, "OK", userService.queryUserByIdCustom(id));
     }
 }

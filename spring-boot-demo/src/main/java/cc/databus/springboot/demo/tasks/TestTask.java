@@ -16,4 +16,11 @@ public class TestTask {
     public void reportCurrentTime() {
         System.out.println("now: " + dateFormat.format(new Date()) ) ;
     }
+
+
+    // generate the pattern from: http://cron.qqe2.com/
+    @Scheduled(cron = "0/5 * * * * ? ")
+    public void cronCurrentTime() {
+        System.out.println("Cron now: " + dateFormat.format(new Date()));
+    }
 }

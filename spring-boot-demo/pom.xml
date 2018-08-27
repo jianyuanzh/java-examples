@@ -72,8 +72,8 @@
 		<!--Druid datasource-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
-			<artifactId>durid</artifactId>
-			<version>1.1.0</version>
+			<artifactId>druid</artifactId>
+			<version>1.1.10</version>
 		</dependency>
 
 		<!--integrate with mybatis -->
@@ -98,9 +98,10 @@
 
 		<dependency>
 			<groupId>com.alibaba</groupId>
-			<artifactId>durid-spring-boot-starter</artifactId>
-			<version>1.1.9</version>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>1.1.10</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.mybatis.generator</groupId>

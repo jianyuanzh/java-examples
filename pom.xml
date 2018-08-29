@@ -13,6 +13,7 @@
         <module>btracesamples</module>
         <module>annotations</module>
         <module>spring-boot-demo</module>
+        <module>lombok-demo</module>
     </modules>
 
     <build>

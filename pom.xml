@@ -14,6 +14,7 @@
         <module>annotations</module>
         <module>spring-boot-demo</module>
         <module>lombok-demo</module>
+        <module>aspect-demo</module>
     </modules>
 
     <build>

@@ -15,6 +15,7 @@
         <module>spring-boot-demo</module>
         <module>lombok-demo</module>
         <module>aspect-demo</module>
+        <module>netty-resolver-demo</module>
     </modules>
 
     <build>

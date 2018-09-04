@@ -1,0 +1,1 @@
+Netty provides a totally async dns resolve solution which is very useful for me. This module is a demo for resolving DNS with netty

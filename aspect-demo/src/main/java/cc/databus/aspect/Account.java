@@ -1,7 +1,7 @@
 package cc.databus.aspect;
 
 public class Account {
-    int balance = 20;
+    double balance = 200;
 
     public boolean withdraw(int amount) {
         if (balance < amount) {
@@ -9,5 +9,12 @@ public class Account {
         }
         balance = balance - amount;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "balance=" + balance +
+                '}';
     }
 }

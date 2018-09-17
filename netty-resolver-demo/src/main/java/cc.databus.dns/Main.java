@@ -5,10 +5,17 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.resolver.ResolvedAddressTypes;
 import io.netty.resolver.dns.DnsNameResolver;
 import io.netty.resolver.dns.DnsNameResolverBuilder;
+import io.netty.resolver.dns.SequentialDnsServerAddressStreamProvider;
+import io.netty.util.internal.SocketUtils;
 import org.apache.commons.cli.*;
 
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class Main {
     public static void main(String[] args) throws ParseException {
@@ -16,6 +23,7 @@ public class Main {
         Options options = new Options()
                 .addOption("t", "type", true, "IPV4_ONLY, IPV6_ONLY, IPV4_PREFERRED or IPV6_PREFERRED")
                 .addOption("m", "maxQueriesPerResolve", true, "the maximum allowed number of DNS queries for a given name resolution")
+                .addOption("s", "dns-servers", true, "DNS servers")
                 .addOption("T", "timeout", true, "timeout of each DNS query in millis")
                 .addOption("a", "resolveAll", false, "add this option means resolve all ips")
                 .addOption("d", "dns", true, "hostnames to be resolved")
@@ -39,16 +47,30 @@ public class Main {
                 .maxQueriesPerResolve(Integer.parseInt(cmd.getOptionValue("m", "16")))
                 .queryTimeoutMillis(Long.parseLong(cmd.getOptionValue("T", "5000")));
 
+        String serversStr = cmd.getOptionValue("s", "");
+        if (serversStr != null && !serversStr.isEmpty()) {
+            List<String> serverList = new ArrayList<>();
+            Collections.addAll(serverList, serversStr.split(","));
+            List<InetSocketAddress> addresses =
+                    serverList.stream().map(server -> SocketUtils.socketAddress(server, 53)).collect(toList());
+            builder.nameServerProvider(new SequentialDnsServerAddressStreamProvider(addresses));
+        }
+
+
         DnsNameResolver resolver = builder.build();
 
         String[] hostnames = cmd.getOptionValues("d");
 
         boolean resolveAll = cmd.hasOption("a");
-        for (String host : hostnames) {
-            doResolve(resolver, host, resolveAll);
+        try {
+            for (String host : hostnames) {
+                doResolve(resolver, host, resolveAll);
+            }
+        }
+        finally {
+            loopGroup.shutdownGracefully();
         }
 
-        loopGroup.shutdownGracefully();
     }
 
     private static void doResolve(final DnsNameResolver resolver, String hostname, boolean all) {

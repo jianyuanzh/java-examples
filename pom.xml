@@ -16,6 +16,7 @@
         <module>lombok-demo</module>
         <module>aspect-demo</module>
         <module>netty-resolver-demo</module>
+        <module>rrd-demo</module>
     </modules>
 
     <build>

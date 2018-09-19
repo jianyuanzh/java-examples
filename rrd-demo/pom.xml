@@ -11,5 +11,24 @@
 
     <artifactId>rrd-demo</artifactId>
 
+    <repositories>
+            <repository>
+                <id>openmns</id>
+                <name>openmns</name>
+                <url>http://repo.opennms.org/maven2/</url>
+            </repository>
+            <!--<repository>-->
+                <!--<id>my-repo2</id>-->
+                <!--<name>your custom repo</name>-->
+                <!--<url>http://jarsm2.dyndns.dk</url>-->
+            <!--</repository>-->
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>org.jrobin</groupId>
+            <artifactId>jrobin</artifactId>
+            <version>1.6.0</version>
+        </dependency>
 
+    </dependencies>
 </project>

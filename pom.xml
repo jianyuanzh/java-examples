@@ -17,6 +17,7 @@
         <module>aspect-demo</module>
         <module>netty-resolver-demo</module>
         <module>rrd-demo</module>
+        <module>dbanalyse</module>
     </modules>
 
     <build>

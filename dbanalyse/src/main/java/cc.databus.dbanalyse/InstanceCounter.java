@@ -22,7 +22,42 @@ public class InstanceCounter {
         System.out.println(companyDbUrl);
         Map<String, String> company2Uuid = getCompanyUuidMap(companyDbUrl);
 
+        for (String comp : company2Uuid.keySet()) {
+            String connectionUrl = String.format("jdbc:mysql://%s:%s/%s?user=%s&password=%s", "localhost", "3306", company2Uuid.get(comp),"root", "");
+            String query ="select wildcard_groovyscript as script, name as name from datasources where collector='script'";
+
+            Connection connection = null;
+            Statement statement = null;
+            ResultSet resultSet = null;
+            Map<Integer, Integer> instanceCountPerCollector = new HashMap<>();
+            try {
+                connection = DriverManager.getConnection(connectionUrl);
+                statement = connection.createStatement();
+                resultSet = statement.executeQuery(query);
+
+                if (!resultSet.next()) {
+                }
+                else {
+                    do {
+                        String script = resultSet.getString("script");
+                        if (script.contains("CollectorDb.getInstance")) {
+                            FileUtils.write(new File("scriptsContainCollectorDb.text"), String.format("%s %s", comp, resultSet.getString("name")), "UTF-8",true);
+                        }
+                    }
+                    while (resultSet.next());
+                }
+            }
+            finally {
+                closeSiliently(resultSet);
+                closeSiliently(statement);
+                closeSiliently(connection);
+            }
+
+
+        }
     }
+
+
 
     static void statisticDeviceCount(Map<String, String> company2Uuid) throws SQLException, IOException {
         Map<String, Map<Integer, Integer>> deviceCountPerCollectorPerCompany = new HashMap<>();
@@ -31,7 +66,7 @@ public class InstanceCounter {
                 String company = entry.getKey();
                 String uuid = entry.getValue();
                 String connectionUrl = String.format("jdbc:mysql://%s:%s/%s?user=%s&password=%s", "localhost", "3306", uuid,"root", "");
-                Map<Integer, Integer> devicePerCollector = countPerCollectorByQuery(connectionUrl, "todo" ); // todo here
+                Map<Integer, Integer> devicePerCollector = countPerCollectorByQuery(connectionUrl, "select wildcard_groovyscript as script from datasources where collector='script'" );
                 if (devicePerCollector.isEmpty()) {
                     System.err.println("No result for " + company + " " + uuid);
                     continue;

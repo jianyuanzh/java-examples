@@ -18,6 +18,9 @@
         <module>netty-resolver-demo</module>
         <module>rrd-demo</module>
         <module>dbanalyse</module>
+        <module>thread-local</module>
+        <module>hashmap-benchmark</module>
+        <module>abnormal-parnew</module>
     </modules>
 
     <build>

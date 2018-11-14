@@ -22,6 +22,7 @@
         <module>hashmap-benchmark</module>
         <module>abnormal-parnew</module>
         <module>LRUCache</module>
+        <module>netty-chat</module>
     </modules>
 
     <build>

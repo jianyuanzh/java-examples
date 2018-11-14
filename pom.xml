@@ -21,6 +21,7 @@
         <module>thread-local</module>
         <module>hashmap-benchmark</module>
         <module>abnormal-parnew</module>
+        <module>LRUCache</module>
     </modules>
 
     <build>

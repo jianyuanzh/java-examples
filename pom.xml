@@ -23,6 +23,7 @@
         <module>abnormal-parnew</module>
         <module>LRUCache</module>
         <module>netty-chat</module>
+        <module>mariadb-connector</module>
     </modules>
 
     <build>
